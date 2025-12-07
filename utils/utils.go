@@ -1,0 +1,68 @@
+package utils
+
+import (
+	"encoding/csv"
+	"os"
+	"strconv"
+	"time"
+)
+
+type PriceData struct {
+	Date   time.Time
+	Open   float64
+	High   float64
+	Low    float64
+	Close  float64
+	Volume int64
+}
+
+func LoadHistoricalData(filename string) ([]PriceData, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var data []PriceData
+
+	for i, record := range records {
+		if i == 0 {
+			continue
+		}
+
+		date, err := time.Parse("01/02/2006", record[0])
+		if err != nil {
+			return nil, err
+		}
+
+		open, err := strconv.ParseFloat(record[3], 64)
+		if err != nil {
+			return nil, err
+		}
+		high, err := strconv.ParseFloat(record[4], 64)
+		if err != nil {
+			return nil, err
+		}
+		low, err := strconv.ParseFloat(record[5], 64)
+		if err != nil {
+			return nil, err
+		}
+		close, err := strconv.ParseFloat(record[1], 64)
+		if err != nil {
+			return nil, err
+		}
+		vol, err := strconv.ParseInt(record[2], 10, 64)
+		if err != nil {
+			return nil, err
+		}
+
+		data = append(data, PriceData{date, open, high, low, close, vol})
+	}
+	return data, nil
+}
