@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	data, err := utils.LoadHistoricalData("data.csv")
+	data, err := utils.LoadHistoricalData("hourly.csv")
 	if err != nil {
 		panic(err)
 	}
 	strategies := []models.Strategy{
-		strategies.MovingAverageStrategy{ShortPeriod: 10, LongPeriod: 20},
+		strategies.MovingAverageStrategy{ShortPeriod: 10, LongPeriod: 30},
 		strategies.MovingAverageStrategy{ShortPeriod: 20, LongPeriod: 50},
 	}
 

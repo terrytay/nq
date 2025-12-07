@@ -13,7 +13,7 @@ type PriceData struct {
 	High   float64
 	Low    float64
 	Close  float64
-	Volume int64
+	Volume float64
 }
 
 func LoadHistoricalData(filename string) ([]PriceData, error) {
@@ -36,28 +36,28 @@ func LoadHistoricalData(filename string) ([]PriceData, error) {
 			continue
 		}
 
-		date, err := time.Parse("01/02/2006", record[0])
+		date, err := time.Parse("2006-01-02", record[0])
 		if err != nil {
 			return nil, err
 		}
 
-		open, err := strconv.ParseFloat(record[3], 64)
+		open, err := strconv.ParseFloat(record[1], 64)
 		if err != nil {
 			return nil, err
 		}
-		high, err := strconv.ParseFloat(record[4], 64)
+		high, err := strconv.ParseFloat(record[2], 64)
 		if err != nil {
 			return nil, err
 		}
-		low, err := strconv.ParseFloat(record[5], 64)
+		low, err := strconv.ParseFloat(record[3], 64)
 		if err != nil {
 			return nil, err
 		}
-		close, err := strconv.ParseFloat(record[1], 64)
+		close, err := strconv.ParseFloat(record[4], 64)
 		if err != nil {
 			return nil, err
 		}
-		vol, err := strconv.ParseInt(record[2], 10, 64)
+		vol, err := strconv.ParseFloat(record[5], 64)
 		if err != nil {
 			return nil, err
 		}

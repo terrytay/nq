@@ -31,6 +31,7 @@ func (s MovingAverageStrategy) Execute(data []utils.PriceData) models.BacktestRe
 				result.WinningTrades++
 			}
 			inPosition = false
+			// fmt.Printf("Entry: %.2f, Exit: %.2f, Profit: %.2f\n", entryPrice, exitPrice, profit)
 		}
 	}
 
